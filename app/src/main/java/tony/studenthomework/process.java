@@ -29,6 +29,10 @@ import java.util.Map;
  */
 
 public class process extends Activity {
+    private static final String ACTUAL_MACHINE_IP = "10.0.2.2";
+    private static final String HOST_NAME = ACTUAL_MACHINE_IP.concat(":8080");
+    private static final String URL = "http://".concat(HOST_NAME).concat("/ns_android.php");
+
     //全域設定
     private TextView title;
     private Button save;
@@ -57,8 +61,6 @@ public class process extends Activity {
     //mThread
     protected static final int REFRESH_DATA = 0x00000001;
     protected static final int GET_DATA = 0x00000002;
-    //private String url = "http://class.vexp.idv.tw/ns_android.php";
-    private String url ="http://rys.vexp.idv.tw/~tony/Student_Homework/ns_android.php";
 
     /** 建立UI Thread使用的Handler，來接收其他Thread來的訊息 */
     Handler mHandler = new Handler()
@@ -115,7 +117,7 @@ public class process extends Activity {
 
                 String result = "";
                 try {
-                    result = submitPostData(url,params,"utf-8");
+                    result = submitPostData(URL,params,"utf-8");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -162,7 +164,7 @@ public class process extends Activity {
                 params.put("ans", finalAns);
                 String result = "";
                 try {
-                    result = submitPostData(url,params,"utf-8");
+                    result = submitPostData(URL,params,"utf-8");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
