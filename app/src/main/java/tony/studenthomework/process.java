@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -28,7 +29,7 @@ import java.util.Map;
  * 將HttpPost改為使用HttpURLConnection
  */
 
-public class process extends Activity {
+public class process extends AppCompatActivity {
     private static final String ACTUAL_MACHINE_IP = "10.0.2.2";
     private static final String HOST_NAME = ACTUAL_MACHINE_IP.concat(":8080");
     private static final String URL = "http://".concat(HOST_NAME).concat("/ns_android.php");
