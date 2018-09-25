@@ -7,7 +7,9 @@ $save_info = 3;
 $get_info = 4;
 $mode = getRequest($_REQUEST['mode'], $student_homework_mode);
 $stu_no = getRequest($_REQUEST['stu_no'], 1);
-// $ans="11111111111111111111111111111111111111111111";
+/**
+ * $ans -> 11111111111111111111111111111111111111111111";
+ */
 $ans = $_REQUEST['ans'];
 $file = "score/pgt";
 $title_file = "score/pgt_title";
@@ -21,10 +23,10 @@ $MAXhw = count($title);
 if ($mode == $save_info) {
     {
         $fp = fopen($file . '.new', 'w');
-        for ($i = 0; $i < $MAXid; $i = $i + 1) //id
+        for ($i = 0; $i < $MAXid; $i = $i + 1)
         {
             $buf = '';
-            for ($j = 0; $j < $MAXhw; $j = $j + 1) //�@�~��
+            for ($j = 0; $j < $MAXhw; $j = $j + 1)
             {
                 if ($i == $stu_no) {
                     $tmp = (int) substr($ans, $j * $hw_len, $hw_len);
