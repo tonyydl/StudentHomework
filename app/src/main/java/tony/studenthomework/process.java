@@ -31,7 +31,7 @@ import java.util.Map;
 
 public class process extends AppCompatActivity {
     private static final String ACTUAL_MACHINE_IP = "10.0.2.2";
-    private static final String HOST_NAME = ACTUAL_MACHINE_IP.concat(":8080");
+    private static final String HOST_NAME = ACTUAL_MACHINE_IP.concat(":5001");
     private static final String URL = "http://".concat(HOST_NAME).concat("/ns_android.php");
 
     //全域設定
