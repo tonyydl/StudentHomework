@@ -4,12 +4,12 @@
     android:layout_height="match_parent" >
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/id_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView1"
-        android:layout_alignBottom="@+id/textView1"
-        android:layout_toRightOf="@+id/textView1" >
+        android:layout_alignBaseline="@+id/subTitle"
+        android:layout_alignBottom="@+id/subTitle"
+        android:layout_toRightOf="@+id/subTitle" >
     </EditText>
 
     <TextView
@@ -17,18 +17,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/editText1"
+        android:layout_below="@+id/id_et"
         android:layout_marginTop="26dp"
         android:text="密碼"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/pw_et"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/TextView01"
         android:layout_alignBottom="@+id/TextView01"
-        android:layout_alignLeft="@+id/editText1"
+        android:layout_alignLeft="@+id/id_et"
         android:layout_alignParentRight="true"
         android:password="true">
     </EditText>
@@ -39,12 +39,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/editText2"
+        android:layout_below="@+id/pw_et"
         android:layout_marginTop="28dp"
         android:text="登入" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/subTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"

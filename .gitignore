@@ -5,3 +5,6 @@
 /build
 /captures
 *.iml
+app/student_homework_debug
+app/student_homework_release
+keystore.properties
