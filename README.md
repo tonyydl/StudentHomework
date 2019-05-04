@@ -9,7 +9,7 @@ Setup backend service for client app
 ### Using docker to run backend service
 
 `
-docker run -d -p 5001:80 -v StudentHomework/backend:/var/www/html/ richarvey/nginx-php-fpm
+docker run -d -p 5001:80 -v $PWD/backend:/var/www/html/ php:7.2-apache
 `
 
 ### Running `Student Home Work` App
