@@ -4,13 +4,11 @@
 
 ## Environment Setup
 
-Setup backend service for client app
+Setup backend service for client app.
 
-### Using docker to run backend service
+### Running `StudentHomeworkBackend` Backend 
 
-`
-docker run -d -p 5001:80 -v $PWD/backend:/var/www/html/ php:7.2-apache
-`
+Run StudentHomeworkBackend project by Intellij.
 
 ### Running `Student Home Work` App
 
