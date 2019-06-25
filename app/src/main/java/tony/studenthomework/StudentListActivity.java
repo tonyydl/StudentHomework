@@ -3,62 +3,56 @@ package tony.studenthomework;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import tony.studenthomework.model.Student;
+
 
 public class StudentListActivity extends AppCompatActivity {
-
-    //總共有3個學生
-    private static String[] mName = new String[]
-            {
-                    "王小明", "陳小春", "郭台銘"
-            };
-    private static String[] mNumber = new String[]
-            {
-                    "A3345678", "A3345679", "A3345680"
-            };
-
-    private ArrayList<HashMap<String, String>> list = new ArrayList<>();
+    private static final String TAG = StudentListActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //使用main中的layout
         setContentView(R.layout.activity_students);
-        init();
+
+        RecyclerView recyclerView = findViewById(R.id.student_recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        StudentListAdapter studentListAdapter = new StudentListAdapter(this, onStudentClickListener);
+        recyclerView.setAdapter(studentListAdapter);
+
+        StudentEndpoint studentEndpoint = new StudentEndpoint("http://10.0.2.2:5001/");
+        studentEndpoint.listStudents(new Callback<List<Student>>() {
+            @Override
+            public void onResponse(Call<List<Student>> call, Response<List<Student>> response) {
+                Log.d(TAG, "onResponse: " + response.body());
+                List<Student> studentList = response.body();
+                if (studentList != null && studentList.size() > 0) {
+                    studentListAdapter.updateAll(studentList);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Student>> call, Throwable t) {
+                Log.d(TAG, "onFailure: request for data failed.");
+            }
+        });
     }
 
-    //做一個初始化的方法
-    public void init() {
-        ListView lv1 = findViewById(R.id.student_listview);
-
-        //把資料加入ArrayList中
-        for (int i = 0; i < mName.length; i++) {
-            HashMap<String, String> item = new HashMap<>();
-            item.put("name", mName[i]);
-            item.put("number", mNumber[i]);
-            list.add(item);
-        }
-        SimpleAdapter adapter = new SimpleAdapter(
-                this,
-                list,
-                R.layout.student_list_item,
-                new String[]{"name", "number"},
-                new int[]{R.id.title, R.id.subTitle});
-        lv1.setAdapter(adapter);
-        lv1.setOnItemClickListener(listener);
-    }
-
-    private AdapterView.OnItemClickListener listener = (parent, view, position, id) -> {
+    private StudentListAdapter.OnStudentClickListener onStudentClickListener = (position, student) -> {
+        Log.i(TAG, String.format("position: %d, student: %s", position, student.toString()));
         Intent it = new Intent();
         it.setClass(StudentListActivity.this, ReviewActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putInt("no", position); //position第幾個
-        bundle.putString("number", mNumber[position]);
+        bundle.putInt("no", position);
+        bundle.putString("number", student.getNumber());
         it.putExtras(bundle);
         startActivity(it);
     };
