@@ -1,4 +1,4 @@
-package tony.studenthomework;
+package tony.studenthomework.student;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,19 +11,20 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import tony.studenthomework.R;
 import tony.studenthomework.model.Student;
 
-public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.MyViewHolder> {
+public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.StudentViewHolder> {
 
     interface OnStudentClickListener {
         void onStudentClick(int position, Student student);
     }
 
-    static class MyViewHolder extends RecyclerView.ViewHolder {
+    static class StudentViewHolder extends RecyclerView.ViewHolder {
         TextView name;
         TextView number;
 
-        MyViewHolder(View itemView) {
+        StudentViewHolder(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_name);
             number = itemView.findViewById(R.id.tv_number);
@@ -41,31 +42,24 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
         this.onStudentClickListener = onStudentClickListener;
     }
 
-    void clear() {
-        this.studentList.clear();
-    }
-
-    void update(Student student) {
-        this.studentList.add(student);
-        notifyDataSetChanged();
-    }
-
     void updateAll(List<Student> studentList) {
+        this.studentList.clear();
         this.studentList.addAll(studentList);
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public StudentListAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.student_list_item, parent, false));
+    public StudentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new StudentViewHolder(LayoutInflater.from(context).inflate(R.layout.student_list_item, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull StudentListAdapter.MyViewHolder holder, int position) {
-        holder.name.setText(studentList.get(position).getName());
-        holder.number.setText(studentList.get(position).getNumber());
-        holder.itemView.setOnClickListener(v -> onStudentClickListener.onStudentClick(position, studentList.get(position)));
+    public void onBindViewHolder(@NonNull StudentViewHolder holder, int position) {
+        Student student = studentList.get(position);
+        holder.name.setText(student.getName());
+        holder.number.setText(student.getNumber());
+        holder.itemView.setOnClickListener(v -> onStudentClickListener.onStudentClick(position, student));
     }
 
     @Override

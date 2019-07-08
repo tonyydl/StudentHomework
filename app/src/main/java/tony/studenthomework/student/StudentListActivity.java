@@ -1,4 +1,4 @@
-package tony.studenthomework;
+package tony.studenthomework.student;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,9 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import tony.studenthomework.R;
 import tony.studenthomework.model.Student;
+import tony.studenthomework.record.RecordActivity;
 
 
 public class StudentListActivity extends AppCompatActivity {
@@ -23,12 +25,12 @@ public class StudentListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_students);
 
-        RecyclerView recyclerView = findViewById(R.id.student_recyclerview);
+        RecyclerView recyclerView = findViewById(R.id.recyclerview_student);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         StudentListAdapter studentListAdapter = new StudentListAdapter(this, onStudentClickListener);
         recyclerView.setAdapter(studentListAdapter);
 
-        StudentEndpoint studentEndpoint = new StudentEndpoint("http://10.0.2.2:5001/");
+        StudentEndpoint studentEndpoint = StudentEndpoint.getInstance();
         studentEndpoint.listStudents(new Callback<List<Student>>() {
             @Override
             public void onResponse(Call<List<Student>> call, Response<List<Student>> response) {
@@ -41,7 +43,7 @@ public class StudentListActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Student>> call, Throwable t) {
-                Log.d(TAG, "onFailure: request for data failed.");
+                Log.e(TAG, "onFailure: request for data failed.", t);
             }
         });
     }
@@ -49,10 +51,9 @@ public class StudentListActivity extends AppCompatActivity {
     private StudentListAdapter.OnStudentClickListener onStudentClickListener = (position, student) -> {
         Log.i(TAG, String.format("position: %d, student: %s", position, student.toString()));
         Intent it = new Intent();
-        it.setClass(StudentListActivity.this, ReviewActivity.class);
+        it.setClass(StudentListActivity.this, RecordActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putInt("no", position);
-        bundle.putString("number", student.getNumber());
+        bundle.putInt(RecordActivity.EXTRA_STUDENT_ID, student.getId());
         it.putExtras(bundle);
         startActivity(it);
     };
