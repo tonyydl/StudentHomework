@@ -1,18 +1,9 @@
 # StudentHomeWork
 
-`StudentHomeWork` is an app help TA register results.
+`StudentHomeWork` is an app that helps Teachers/TAs evaluates student score.
 
-## Environment Setup
+## Run Kotlin back-end server `student-homework-ktor`  
 
-Setup backend service for client app
-
-### Using docker to run backend service
-
-`
-docker run -d -p 5001:80 -v $PWD/backend:/var/www/html/ php:7.2-apache
-`
-
-### Running `Student Home Work` App
-
-- username: adm
-- password: 159889
+```
+$ java -jar student-homework-ktor-0.0.1.jar
+```

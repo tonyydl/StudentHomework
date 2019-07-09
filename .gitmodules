@@ -1,0 +1,3 @@
+[submodule "StudentHomeworkBackend"]
+	path = StudentHomeworkBackend
+	url = git@github.com:tonyyang924/StudentHomeworkBackend.git
