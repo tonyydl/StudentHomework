@@ -4,21 +4,19 @@ import android.util.Log;
 
 import java.util.List;
 
-import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import tony.studenthomework.Constants;
 import tony.studenthomework.model.Record;
 
-public class RecordEndpoint {
+class RecordEndpoint {
 
     private static final String TAG = RecordEndpoint.class.getSimpleName();
 
     private static RecordEndpoint instance;
 
-    public static RecordEndpoint getInstance() {
+    static RecordEndpoint getInstance() {
         if (instance == null) {
             synchronized (RecordEndpoint.class) {
                 instance = new RecordEndpoint(Constants.BASE_URL);
@@ -38,7 +36,7 @@ public class RecordEndpoint {
         serverAPI = retrofit.create(RecordServerApi.class);
     }
 
-    public void updateRecords(List<Record> recordList, Callback<List<Record>> callback) {
+    void updateRecords(List<Record> recordList, Callback<List<Record>> callback) {
         Log.i(TAG, "Update records...");
         serverAPI.updateRecords(recordList).enqueue(callback);
     }

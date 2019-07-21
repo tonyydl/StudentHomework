@@ -10,7 +10,7 @@ public class Record {
         this(0, sid, hid, status);
     }
 
-    public Record(int id, int sid, int hid, int status) {
+    private Record(int id, int sid, int hid, int status) {
         this.id = id;
         this.sid = sid;
         this.hid = hid;
