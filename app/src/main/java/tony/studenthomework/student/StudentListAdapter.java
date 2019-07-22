@@ -14,7 +14,10 @@ import java.util.List;
 import tony.studenthomework.R;
 import tony.studenthomework.model.Student;
 
-public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.StudentViewHolder> {
+public class StudentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private static final int VIEW_TYPE_ITEM = 1;
+    private static final int VIEW_TYPE_EMPTY = 0;
 
     interface OnStudentClickListener {
         void onStudentClick(int position, Student student);
@@ -50,20 +53,38 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
 
     @NonNull
     @Override
-    public StudentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == VIEW_TYPE_EMPTY) {
+            return new RecyclerView.ViewHolder(LayoutInflater.from(context).inflate(R.layout.empty_view, parent, false)) {
+            };
+        }
         return new StudentViewHolder(LayoutInflater.from(context).inflate(R.layout.student_list_item, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull StudentViewHolder holder, int position) {
-        Student student = studentList.get(position);
-        holder.name.setText(student.getName());
-        holder.number.setText(student.getNumber());
-        holder.itemView.setOnClickListener(v -> onStudentClickListener.onStudentClick(position, student));
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof StudentViewHolder) {
+            StudentViewHolder studentViewHolder = (StudentViewHolder) holder;
+            Student student = studentList.get(position);
+            studentViewHolder.name.setText(student.getName());
+            studentViewHolder.number.setText(student.getNumber());
+            studentViewHolder.itemView.setOnClickListener(v -> onStudentClickListener.onStudentClick(position, student));
+        }
     }
 
     @Override
     public int getItemCount() {
+        if (studentList.size() == 0) {
+            return 1;
+        }
         return studentList.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (studentList.size() == 0) {
+            return VIEW_TYPE_EMPTY;
+        }
+        return VIEW_TYPE_ITEM;
     }
 }
