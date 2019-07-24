@@ -58,6 +58,7 @@ public class RecordActivity extends AppCompatActivity {
                 if (actionBar != null) {
                     actionBar.setTitle(studentDetail.getName());
                     actionBar.setSubtitle(studentDetail.getNumber());
+                    actionBar.setDisplayHomeAsUpEnabled(true);
                 }
                 adapter.updateAll(studentDetail.getRecordedHomework());
             }
@@ -67,6 +68,12 @@ public class RecordActivity extends AppCompatActivity {
                 Log.e(TAG, "onFailure: request for data failed.", t);
             }
         });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 
     @Override
