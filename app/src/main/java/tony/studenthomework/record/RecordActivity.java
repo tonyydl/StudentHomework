@@ -7,8 +7,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.SparseIntArray;
-import android.view.View;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -29,7 +30,6 @@ public class RecordActivity extends AppCompatActivity {
     public static final String EXTRA_STUDENT_ID = "student_id";
 
     private int studentId;
-    private Button saveBtn;
 
     private RecordAdapter adapter;
 
@@ -45,8 +45,6 @@ public class RecordActivity extends AppCompatActivity {
         homeworkRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new RecordAdapter(this);
         homeworkRecyclerView.setAdapter(adapter);
-        saveBtn = findViewById(R.id.save_btn);
-        saveBtn.setEnabled(false);
         StudentEndpoint studentEndpoint = StudentEndpoint.getInstance();
         studentEndpoint.getStudentDetail(studentId, new Callback<StudentDetail>() {
             @Override
@@ -60,10 +58,9 @@ public class RecordActivity extends AppCompatActivity {
                 if (actionBar != null) {
                     actionBar.setTitle(studentDetail.getName());
                     actionBar.setSubtitle(studentDetail.getNumber());
+                    actionBar.setDisplayHomeAsUpEnabled(true);
                 }
                 adapter.updateAll(studentDetail.getRecordedHomework());
-                saveBtn.setOnClickListener(onSaveClickListener);
-                saveBtn.setEnabled(true);
             }
 
             @Override
@@ -73,26 +70,44 @@ public class RecordActivity extends AppCompatActivity {
         });
     }
 
-    private View.OnClickListener onSaveClickListener = v -> {
-        List<Record> updateList = new ArrayList<>();
-        List<RecordedHomework> recordedHomeworkList = adapter.getRecordedHomeworkList();
-        SparseIntArray listStatus = adapter.getListStatus();
-        for (int i = 0; i < recordedHomeworkList.size(); i++) {
-            RecordedHomework recordedHomework = recordedHomeworkList.get(i);
-            updateList.add(new Record(studentId, recordedHomework.getHomework().getId(), listStatus.get(i)));
-        }
-        RecordEndpoint.getInstance().updateRecords(updateList, new Callback<List<Record>>() {
-            @Override
-            public void onResponse(Call<List<Record>> call, Response<List<Record>> response) {
-                Log.d(TAG, "onResponse: " + response.body());
-                Toast.makeText(getApplicationContext(), "Update records success.", Toast.LENGTH_SHORT).show();
-            }
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
+    }
 
-            @Override
-            public void onFailure(Call<List<Record>> call, Throwable t) {
-                Log.e(TAG, "onFailure: update records failed.", t);
-                Toast.makeText(getApplicationContext(), "Update records fail...", Toast.LENGTH_SHORT).show();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_record, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.done) {
+            List<Record> updateList = new ArrayList<>();
+            List<RecordedHomework> recordedHomeworkList = adapter.getRecordedHomeworkList();
+            SparseIntArray listStatus = adapter.getListStatus();
+            for (int i = 0; i < recordedHomeworkList.size(); i++) {
+                RecordedHomework recordedHomework = recordedHomeworkList.get(i);
+                updateList.add(new Record(studentId, recordedHomework.getHomework().getId(), listStatus.get(i)));
             }
-        });
-    };
+            RecordEndpoint.getInstance().updateRecords(updateList, new Callback<List<Record>>() {
+                @Override
+                public void onResponse(Call<List<Record>> call, Response<List<Record>> response) {
+                    Log.d(TAG, "onResponse: " + response.body());
+                    Toast.makeText(getApplicationContext(), "Update records success.", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(Call<List<Record>> call, Throwable t) {
+                    Log.e(TAG, "onFailure: update records failed.", t);
+                    Toast.makeText(getApplicationContext(), "Update records fail...", Toast.LENGTH_SHORT).show();
+                }
+            });
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
