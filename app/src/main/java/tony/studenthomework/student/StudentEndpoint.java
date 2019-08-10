@@ -7,7 +7,7 @@ import java.util.List;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import tony.studenthomework.Constants;
+import tony.studenthomework.BuildConfig;
 import tony.studenthomework.model.Student;
 import tony.studenthomework.model.StudentDetail;
 
@@ -20,7 +20,7 @@ public class StudentEndpoint {
     public static StudentEndpoint getInstance() {
         if (instance == null) {
             synchronized (StudentEndpoint.class) {
-                instance = new StudentEndpoint(Constants.BASE_URL);
+                instance = new StudentEndpoint(BuildConfig.BASE_URL);
             }
         }
         return instance;
