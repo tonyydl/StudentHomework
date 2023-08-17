@@ -10,13 +10,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import tony.studenthomework.BuildConfig;
 import tony.studenthomework.model.Record;
 
-class RecordEndpoint {
+public class RecordEndpoint {
 
     private static final String TAG = RecordEndpoint.class.getSimpleName();
 
     private static RecordEndpoint instance;
 
-    static RecordEndpoint getInstance() {
+    public static RecordEndpoint getInstance() {
         if (instance == null) {
             synchronized (RecordEndpoint.class) {
                 instance = new RecordEndpoint(BuildConfig.BASE_URL);
@@ -36,7 +36,7 @@ class RecordEndpoint {
         serverAPI = retrofit.create(RecordServerApi.class);
     }
 
-    void updateRecords(List<Record> recordList, Callback<List<Record>> callback) {
+    public void updateRecords(List<Record> recordList, Callback<List<Record>> callback) {
         Log.i(TAG, "Update records...");
         serverAPI.updateRecords(recordList).enqueue(callback);
     }
