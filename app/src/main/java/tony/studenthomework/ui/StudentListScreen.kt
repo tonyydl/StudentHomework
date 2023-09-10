@@ -27,8 +27,8 @@ fun StudentListScreen(
         LazyColumn(modifier = modifier) {
             items(studentList) { student ->
                 StudentRow(
-                    name = student.name,
-                    number = student.number,
+                    name = student.name.orEmpty(),
+                    number = student.number.orEmpty(),
                     onClick = {
                         onClick(student.id)
                     }

@@ -1,19 +1,6 @@
-package tony.studenthomework.data.dto;
+package tony.studenthomework.data.dto
 
-public class Homework {
-    private final int id;
-    private final String title;
-
-    public Homework(int id, String title) {
-        this.id = id;
-        this.title = title;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-}
+data class Homework(
+    val id: Int = 0,
+    val title: String? = null
+)

@@ -70,8 +70,8 @@ class MainViewModel: ViewModel() {
             val recordList = recordedHomeworkList?.map {
                 Record(
                     studentId,
-                    it.homework.id,
-                    it.status.id
+                    it.homework?.id ?: 0,
+                    it.status?.id ?: 0
                 )
             }?.toList() ?: emptyList()
             recordRepository.updateRecords(recordList)

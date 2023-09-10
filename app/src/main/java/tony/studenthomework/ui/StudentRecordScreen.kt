@@ -39,8 +39,8 @@ fun StudentRecordScreen(
         LazyColumn(modifier = modifier) {
             itemsIndexed(studentDetail.recordedHomework) { index, recordHomework ->
                 RecordRow(
-                    title = recordHomework.homework.title,
-                    status = recordHomework.status.id,
+                    title = recordHomework.homework?.title.orEmpty(),
+                    status = recordHomework.status?.id ?: 0,
                     onClickItem = { checked ->
                         onClickItem(index, checked)
                     },

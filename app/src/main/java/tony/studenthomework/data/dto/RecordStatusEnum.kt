@@ -1,13 +1,7 @@
-package tony.studenthomework.data.dto;
+package tony.studenthomework.data.dto
 
-public enum RecordStatusEnum {
+enum class RecordStatusEnum(private val status: Int) {
     NOT_YET(0),
     PROCESSING(1),
-    DONE(2);
-
-    private int status;
-
-    RecordStatusEnum(int status) {
-        this.status = status;
-    }
+    DONE(2)
 }
