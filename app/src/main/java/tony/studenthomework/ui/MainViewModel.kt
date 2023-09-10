@@ -11,8 +11,8 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import tony.studenthomework.service.RetrofitManager
 import tony.studenthomework.data.MainUiState
-import tony.studenthomework.model.Record
-import tony.studenthomework.model.StudentDetail
+import tony.studenthomework.data.dto.Record
+import tony.studenthomework.data.dto.StudentDetail
 import tony.studenthomework.repository.RecordRepository
 import tony.studenthomework.repository.StudentRepository
 
@@ -68,7 +68,11 @@ class MainViewModel: ViewModel() {
             val studentId = uiState.value.selectedStudentDetail?.id ?: 0
             val recordedHomeworkList = uiState.value.selectedStudentDetail?.recordedHomework
             val recordList = recordedHomeworkList?.map {
-                Record(studentId, it.homework.id, it.status.id)
+                Record(
+                    studentId,
+                    it.homework.id,
+                    it.status.id
+                )
             }?.toList() ?: emptyList()
             recordRepository.updateRecords(recordList)
         }

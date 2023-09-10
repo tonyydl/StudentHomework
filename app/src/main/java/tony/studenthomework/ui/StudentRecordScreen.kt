@@ -23,11 +23,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import tony.studenthomework.R
-import tony.studenthomework.model.Homework
-import tony.studenthomework.model.RecordStatus
-import tony.studenthomework.model.RecordStatusEnum
-import tony.studenthomework.model.RecordedHomework
-import tony.studenthomework.model.StudentDetail
+import tony.studenthomework.data.dto.Homework
+import tony.studenthomework.data.dto.RecordStatus
+import tony.studenthomework.data.dto.RecordStatusEnum
+import tony.studenthomework.data.dto.RecordedHomework
+import tony.studenthomework.data.dto.StudentDetail
 
 @Composable
 fun StudentRecordScreen(
@@ -57,8 +57,18 @@ fun StudentRecordScreen(
 @Composable
 private fun PreviewStudentRecordScreen() {
     val recordedHomework = mutableListOf<RecordedHomework>()
-    recordedHomework.add(RecordedHomework(Homework(1, "Two Sum"), RecordStatus(1, "PROCESSING")))
-    recordedHomework.add(RecordedHomework(Homework(2, "Add Two Numbers"), RecordStatus(2, "DONE")))
+    recordedHomework.add(
+        RecordedHomework(
+            Homework(1, "Two Sum"),
+            RecordStatus(1, "PROCESSING")
+        )
+    )
+    recordedHomework.add(
+        RecordedHomework(
+            Homework(2, "Add Two Numbers"),
+            RecordStatus(2, "DONE")
+        )
+    )
     val studentDetail = StudentDetail(
         1,
         "A0001",

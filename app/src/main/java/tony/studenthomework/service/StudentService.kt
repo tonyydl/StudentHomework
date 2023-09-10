@@ -2,8 +2,8 @@ package tony.studenthomework.service
 
 import retrofit2.http.GET
 import retrofit2.http.Path
-import tony.studenthomework.model.Student
-import tony.studenthomework.model.StudentDetail
+import tony.studenthomework.data.dto.Student
+import tony.studenthomework.data.dto.StudentDetail
 
 interface StudentService {
     @GET("/student")

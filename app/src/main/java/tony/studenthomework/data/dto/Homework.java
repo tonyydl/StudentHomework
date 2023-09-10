@@ -1,4 +1,4 @@
-package tony.studenthomework.model;
+package tony.studenthomework.data.dto;
 
 public class Homework {
     private final int id;

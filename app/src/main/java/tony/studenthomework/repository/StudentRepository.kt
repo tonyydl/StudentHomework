@@ -1,8 +1,8 @@
 package tony.studenthomework.repository
 
 import tony.studenthomework.service.StudentService
-import tony.studenthomework.model.Student
-import tony.studenthomework.model.StudentDetail
+import tony.studenthomework.data.dto.Student
+import tony.studenthomework.data.dto.StudentDetail
 
 class StudentRepository(private val studentService: StudentService) {
     suspend fun listStudents(): List<Student> = studentService.listStudents()

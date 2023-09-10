@@ -15,7 +15,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import tony.studenthomework.model.Student
+import tony.studenthomework.data.dto.Student
 
 @Composable
 fun StudentListScreen(

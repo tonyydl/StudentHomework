@@ -16,7 +16,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -28,10 +27,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import tony.studenthomework.R
-import tony.studenthomework.model.RecordStatus
-import tony.studenthomework.model.RecordStatusEnum
-import tony.studenthomework.model.RecordedHomework
-import tony.studenthomework.model.StudentDetail
+import tony.studenthomework.data.dto.RecordStatus
+import tony.studenthomework.data.dto.RecordStatusEnum
+import tony.studenthomework.data.dto.RecordedHomework
+import tony.studenthomework.data.dto.StudentDetail
 
 enum class MainScreen {
     List,
@@ -135,7 +134,10 @@ fun MainApp(
                     onClickItem = { index, checked ->
                         val recordedHomework = studentDetail?.recordedHomework?.get(index)
                         val recordStatus = if (checked) {
-                            RecordStatus(RecordStatusEnum.DONE.ordinal, RecordStatusEnum.DONE.name)
+                            RecordStatus(
+                                RecordStatusEnum.DONE.ordinal,
+                                RecordStatusEnum.DONE.name
+                            )
                         } else {
                             RecordStatus(
                                 RecordStatusEnum.PROCESSING.ordinal,
@@ -143,16 +145,20 @@ fun MainApp(
                             )
                         }
                         val newRecordedHomework =
-                            RecordedHomework(recordedHomework?.homework, recordStatus)
+                            RecordedHomework(
+                                recordedHomework?.homework,
+                                recordStatus
+                            )
                         val newRecordedHomeworkList =
                             studentDetail?.recordedHomework?.toMutableList()
                         newRecordedHomeworkList?.set(index, newRecordedHomework)
-                        val newStudentDetail = StudentDetail(
-                            studentDetail?.id ?: 0,
-                            studentDetail?.number.orEmpty(),
-                            studentDetail?.name.orEmpty(),
-                            newRecordedHomeworkList
-                        )
+                        val newStudentDetail =
+                            StudentDetail(
+                                studentDetail?.id ?: 0,
+                                studentDetail?.number.orEmpty(),
+                                studentDetail?.name.orEmpty(),
+                                newRecordedHomeworkList
+                            )
                         viewModel.setSelectedStudentDetail(newStudentDetail)
                     }
                 )

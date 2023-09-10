@@ -1,7 +1,7 @@
 package tony.studenthomework.data
 
-import tony.studenthomework.model.Student
-import tony.studenthomework.model.StudentDetail
+import tony.studenthomework.data.dto.Student
+import tony.studenthomework.data.dto.StudentDetail
 
 data class MainUiState(
     val studentList: List<Student> = listOf(),
